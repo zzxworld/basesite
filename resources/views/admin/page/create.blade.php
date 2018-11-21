@@ -1,15 +1,15 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-
-    <h1>新增页面</h1>
-
-    <div class="form-group">
-        <a class="btn btn-outline-secondary" href="{{ url('admin/pages') }}">返回</a>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">新增页面</div>
+            <div class="card-body">
+                <form action="{{ url('admin/pages') }}" method="post">
+                    @include('admin/page/components/edit-form')
+                    <a class="btn btn-outline-secondary float-right" href="{{ url('admin/pages') }}">返回</a>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <form action="{{ url('admin/pages') }}" method="post">
-        @include('admin/page/components/edit-form')
-    </form>
-
 @endsection

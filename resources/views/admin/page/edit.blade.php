@@ -1,41 +1,47 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-
-    <h1>编辑页面</h1>
-
-    <div class="form-group">
-        <a class="btn btn-outline-secondary" href="{{ url('admin/pages') }}">返回</a>
-        <form action="{{ url('admin/pages/'.$page->id) }}" method="post">
-            {{ csrf_field() }}
-            @method('DELETE')
-            <button class="btn btn-danger float-right" type="submit">删除页面</button>
-        </form>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">编辑页面</div>
+            <div class="card-body">
+                <form action="{{ url('admin/pages/'.$page->id) }}" method="post">
+                    @method('PUT')
+                    @include('admin/page/components/edit-form')
+                    <button class="btn btn-danger float-right" type="button">删除页面</button>
+                    <a class="btn btn-outline-secondary float-right" href="{{ url('admin/pages') }}">返回</a>
+                </form>
+                <form id="delete-form" action="{{ url('admin/pages/'.$page->id) }}" method="post">
+                    {{ csrf_field() }}
+                    @method('DELETE')
+                </form>
+            </div>
+        </div>
     </div>
-
-    <form action="{{ url('admin/pages/'.$page->id) }}" method="post">
-        @method('PUT')
-        @include('admin/page/components/edit-form')
-    </form>
-
 @endsection
 
 @section('head')
-    <style type="text/css" media="screen">
+    <style type="text/css">
     .form-group form {
         display: inline;
+    }
+    .btn-danger {
+        margin-left: 0.5em;
     }
     </style>
 @endsection
 
 @section('foot')
-    <script charset="utf-8" defer="defer">
-        document.querySelector('.btn-danger').addEventListener('click', event => {
-            event.preventDefault()
-            if (confirm('确定要删除此页面吗?')) {
-                event.target.parentNode.submit()
-            }
-        })
+    <script charset="utf-8" defer>
+        $(() => {
+            $('button.btn-danger').on('click', e => {
+                if (!confirm('确定要删除此页面吗?')) {
+                    return;
+                }
+
+                $('form#delete-form').submit();
+            });
+        });
     </script>
 @endsection
 
