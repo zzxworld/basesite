@@ -3,20 +3,15 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+        <div class="col-md-10 text-center">
+            <h1>{{ Auth::user()->name }}</h1>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+            <a class="btn btn-link" href="{{ url('user/change_password') }}">修改密码</a>
 
-                    You are logged in!
-                </div>
-            </div>
+            @if (Auth::user()->isAdmin)
+                <a class="btn btn-link" href="{{ url('admin/pages') }}">页面管理</a>
+                <a class="btn btn-link" href="{{ url('admin/comments') }}">评论管理</a>
+            @endif
         </div>
     </div>
 </div>
